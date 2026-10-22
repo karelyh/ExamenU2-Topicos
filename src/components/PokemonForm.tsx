@@ -2,31 +2,31 @@ import { useActionState } from 'react';
 import { usePokemonRegistry } from '../context/PokemonContext'
 
 type ActionState = {
-  success: string | null;
-  errorGeneral: string | null;
-  fieldErrors: { nickname?: string; role?: string };
+  success: string | null
+  errorGeneral: string | null
+  fieldErrors: { nickname?: string; role?: string }
 };
 
 export default function PokemonForm() {
-  const { state: { loadedPokemon }, dispatch } = usePokemonRegistry();
+  const { state: { loadedPokemon }, dispatch } = usePokemonRegistry()
 
   const registerAction = async (prevState: ActionState, formData: FormData): Promise<ActionState> => {
     if (!loadedPokemon) {
-      return { success: null, errorGeneral: 'No hay pokémon cargado válido.', fieldErrors: {} };
+      return { success: null, errorGeneral: 'No hay pokémon cargado válido.', fieldErrors: {} }
     }
 
-    const nickname = formData.get('nickname')?.toString().trim() || '';
-    const role = formData.get('role')?.toString() as 'titular' | 'reserva';
+    const nickname = formData.get('nickname')?.toString().trim() || ''
+    const role = formData.get('role')?.toString() as 'titular' | 'reserva'
     const fieldErrors: ActionState['fieldErrors'] = {};
 
-    if (nickname.length < 3) fieldErrors.nickname = 'El apodo debe tener al menos 3 caracteres.';
-    if (role !== 'titular' && role !== 'reserva') fieldErrors.role = 'Debe seleccionar un rol válido.';
+    if (nickname.length < 3) fieldErrors.nickname = 'El apodo debe tener al menos 3 caracteres.'
+    if (role !== 'titular' && role !== 'reserva') fieldErrors.role = 'Debe seleccionar un rol válido.'
 
     if (Object.keys(fieldErrors).length > 0) {
-      return { success: null, errorGeneral: null, fieldErrors };
+      return { success: null, errorGeneral: null, fieldErrors }
     }
     
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
     dispatch({
       type: 'ADD_RECORD',
@@ -39,12 +39,11 @@ export default function PokemonForm() {
         nickname,
         role
       }
-    });
+    })
 
-    return { success: 'Pokémon registrado correctamente', errorGeneral: null, fieldErrors: {} };
-  };
-
-  const [formState, formAction, isPending] = useActionState(registerAction, { success: null, errorGeneral: null, fieldErrors: {} });
+    return { success: 'Pokémon registrado correctamente', errorGeneral: null, fieldErrors: {} }
+  }
+  const [formState, formAction, isPending] = useActionState(registerAction, { success: null, errorGeneral: null, fieldErrors: {} })
 
   return (
     <section className="panel" aria-labelledby="form-title">

@@ -1,15 +1,15 @@
-import type { RegistryEntry } from '../context/PokemonContext';
+import type { RegistryEntry } from '../context/PokemonContext'
 
 interface RegistryItemProps {
-  record: RegistryEntry;
-  onRemove: () => void;
+  record: RegistryEntry
+  onRemove: () => void
 }
 
 export default function RegistryItem({ record, onRemove }: RegistryItemProps) {
   return (
     <article className="ticket">
       <div className="ticket-top">
-        <span className="ticket-id">Registro local</span>
+        <span className="ticket-id">Registro #{record.pokemonId}</span>
         <div className="badges">
           <span className={`badge type-${record.type}`}>{record.type}</span>
           <span className={`badge role-${record.role}`}>

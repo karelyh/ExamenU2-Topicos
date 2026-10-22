@@ -2,31 +2,31 @@ import { createContext, useReducer, useContext} from 'react';
 import type {ReactNode, Dispatch } from 'react'
 
 export type PokemonDetails = {
-  pokemonId: number;
-  pokemonName: string;
-  imagen: string;
-  type: string;
+  pokemonId: number
+  pokemonName: string
+  imagen: string
+  type: string
 };
 
 export type RegistryEntry = {
-  entryId: string;
-  pokemonId: number;
-  pokemonName: string;
-  image: string;
-  type: string;
-  nickname: string;
-  role: 'titular' | 'reserva';
+  entryId: string
+  pokemonId: number
+  pokemonName: string
+  image: string
+  type: string
+  nickname: string
+  role: 'titular' | 'reserva'
 };
 
 export type AppState = {
-  records: RegistryEntry[];
-  loadedPokemon: PokemonDetails | null;
+  records: RegistryEntry[]
+  loadedPokemon: PokemonDetails | null
 };
 
 export type Action =
   | { type: 'SET_POKEMON'; payload: PokemonDetails | null }
   | { type: 'ADD_RECORD'; payload: RegistryEntry }
-  | { type: 'REMOVE_RECORD'; payload: string };
+  | { type: 'REMOVE_RECORD'; payload: string }
 
 const initialState: AppState = {
   records: [],
@@ -36,11 +36,15 @@ const initialState: AppState = {
 function pokemonReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'SET_POKEMON':
-      return { ...state, loadedPokemon: action.payload };
+      return { ...state, 
+        loadedPokemon: action.payload }
     case 'ADD_RECORD':
-      return { ...state, records: [...state.records, action.payload] };
+      return { ...state, 
+        records: [...state.records, 
+            action.payload] }
     case 'REMOVE_RECORD':
-      return { ...state, records: state.records.filter(r => r.entryId !== action.payload) };
+      return { ...state, 
+        records: state.records.filter(r => r.entryId !== action.payload) }
     default:
       return state;
   }
